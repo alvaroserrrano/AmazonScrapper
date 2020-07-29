@@ -1,7 +1,7 @@
 from selenium import webdriver
 
 DIRECTORY = 'reports'
-NAME = 'iphone'
+PRODUCT_NAME = 'iphone'
 CURRENCY = '€'
 MIN_PRICE = '300'
 MAX_PRICE = '800'
