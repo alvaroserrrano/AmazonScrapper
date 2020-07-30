@@ -26,3 +26,7 @@ Visit the docs for Selenium WebDriver ![Selenium Docs](https://www.selenium.dev/
 * Customize the config file to meet your needs : product, price range...
 * Run as a chron job on a remote server in the cloud
 
+## Run scraper
+```
+python tracker.py
+```
