@@ -16,9 +16,41 @@ from datetime import datetime
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
-class ReportGenerator():
-    def __init__(self):
-        pass
+class GenerateReport:
+    def __init__(self, filename, filters, base_url, currency, data):
+        self.filename = filename
+        self.filters = filters
+        self.base_url = base_url
+        self.currency = currency
+        self.data = data
+        report = {
+            'title': self.filename,
+            'date': self.get_current_time(),
+            #best product according to price
+            'best_product': self.get_best_product(),
+            'filters': self.filters,
+            'base_url': self.base_url,
+            'currency': self.currency,
+            'product_list': self.data
+        }
+
+        print('Generating report...')
+        with open(f'{DIRECTORY}/{filename}.json', 'w') as file:
+            json.dump(report, file)
+        print('Done!')
+
+    @staticmethod
+    def get_current_time():
+        now = datetime.now()
+        return now.strftime('%d/%m/%Y %H:%M:%S')
+
+    def get_best_product(self):
+        try:
+            return sorted(self.data, key=lambda x: x['price'])[0]
+        except Exception as e:
+            print('An error occurred categorizing the products')
+            print(e)
+            return None
 
 class AmazonAPI:
     def __init__(self, product_name, filters, base_url, currency):
@@ -150,6 +182,7 @@ class AmazonAPI:
             return None
         return price
 
+    #this depends on the Amazon store (country)
     def convert_price(self, price):
         #638,99 €
         #1.159,00 €
@@ -168,4 +201,4 @@ class AmazonAPI:
 if __name__ == "__main__":
     amazon_scrapper = AmazonAPI(PRODUCT_NAME, FILTERS, BASE_URL, CURRENCY)
     data = amazon_scrapper.run()
-    print(data)
+    GenerateReport(PRODUCT_NAME, FILTERS, BASE_URL, CURRENCY, data)
