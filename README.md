@@ -27,6 +27,15 @@ Visit the docs for Selenium WebDriver ![Selenium Docs](https://www.selenium.dev/
 * Run as a chron job on a remote server in the cloud
 
 ## Run scraper
+### Install requirements
+```
+pip install requirements.txt
+```
+### Activate venv
+```
+source /venv/bin/activate
+```
+### Run the script
 ```
 python tracker.py
 ```
